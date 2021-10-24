@@ -1,0 +1,9 @@
+1. struct Point, class Vector
+2. constructor with two points
+3. operator +--
+4. collinear
+5. length
+6. angle
+
+7*. triangleArea(p1,p2,p3)
+7**. area(points[50], int size)
