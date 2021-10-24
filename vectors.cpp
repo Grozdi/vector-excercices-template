@@ -4,7 +4,8 @@ using namespace std;
 
 struct Point {
     double x, y;
-
+	
+	Point() : x(0), y(0) {}
     Point(double x, double y) : x(x), y(y) {}
 };
 
@@ -12,6 +13,7 @@ class Vector {
     double x, y;
 
 public:
+    Vector() : x(0), y(0) {}
     Vector(double x, double y) : x(x), y(y) {}
     // if we denote p1 and p2 as points A and B, their radius-vectors would be OA and OB
     Vector(Point p1, Point p2) : x(p2.x - p1.x), y(p2.y - p1.y) {}
@@ -43,13 +45,10 @@ public:
 
     // this is for printing the vector
     friend ostream& operator<<(ostream& os, const Vector& c);
+    // this is for entering the vector
+    friend istream& operator>>(istream& in, Vector& v);
 };
 
-// this is for printing the vector
-ostream& operator<<(ostream& out, const Vector& v) {
-    out << "(" << v.x << ", " << v.y << ")";
-    return out;
-}
 
 // this function should find the area of the triangle made up of the three points p1, p2, p3
 double area(const Point& p1, const Point& p2, const Point& p3) {
@@ -61,21 +60,84 @@ double area(const Point points[50], int size) {
     return 0;
 }
 
+void vectors();
+void triangleArea();
+void area();
+
+ostream& operator<<(ostream& os, const Vector& c);
+istream& operator>>(istream& in, Vector& v);
+istream& operator>>(istream& in, Point& p);
 
 int main() {
-    Vector v1 = Vector(Point(0, 0), Point(3, 5));
-    Vector v2 = Vector(Point(3, 5), Point(7, 3));
-    Point points[5] = { Point(4,4), Point(5,4), Point(6,5), Point(2,9), Point(1,6) };
+    char input;
+    cin >> input;
 
-    cout << v1 << " + " << v2 << " = " << v1.sum(v2) << endl;
-    cout << v1 << " - " << v2 << " = " << v1.difference(v2) << endl;
-
-    cout << "Colinear: " << v1.is_colinear(v1) << endl;
-    cout << "Length: " << v1.length() << endl;
-    cout << "Angle: " << v1.angle(v2) << endl;
-
-    cout << "Area triangle: " << area(Point(1, 2), Point(3, -1), Point(2, 4)) << endl;
-    cout << "Area polygon: " << area(points, 5) << endl;
+    switch (input) {
+        case 'v':
+            vectors();
+            break;
+        case 't': 
+            triangleArea();
+            break;
+        case 's': 
+            area();
+            break;
+        default:
+            cout << "Invalid input" << endl;
+    }
 
     return 0;
+}
+
+void vectors() {
+    Vector v1, v2;
+    cin >> v1 >> v2;
+	
+    cout << v1 << " + " << v2 << " = " << v1.sum(v2) << endl;
+    cout << v1 << " - " << v2 << " = " << v1.difference(v2) << endl;
+    cout << "Colinear: " << v1.is_colinear(v1) << endl;
+    cout << "Length: " << v1.length() << endl;
+    cout << "Angle: " << v1.angle(v2) * 180 / 3.1415926536 << "°" << endl;
+}
+
+void triangleArea() {
+    Point p1, p2, p3;
+    cin >> p1 >> p2 >> p3;
+	
+    cout << "Area triangle: " << area(p1, p2, p3) << endl;
+}
+
+void area() {
+    int size;
+    cin >> size;
+	
+    Point *points = new Point[size];
+    for (int i = 0; i < size; i++) {
+        cin >> points[i];
+    }
+
+    cout << "Area polygon: " << area(points, size) << endl;
+    delete[] points;
+}
+
+// this is for printing the vector
+ostream& operator<<(ostream& out, const Vector& v) {
+    out << "(" << v.x << ", " << v.y << ")";
+    return out;
+}
+
+// this is for inputing a vector
+istream& operator>>(istream& in, Vector& v) {
+    in >> v.x;
+    in >> v.y;
+	
+    return in;
+}
+
+// this is for inputing a point
+istream& operator>>(istream& in, Point& p) {
+    in >> p.x;
+    in >> p.y;
+	
+    return in;
 }
