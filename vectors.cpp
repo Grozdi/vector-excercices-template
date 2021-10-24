@@ -95,7 +95,7 @@ void vectors() {
 	
     cout << v1 << " + " << v2 << " = " << v1.sum(v2) << endl;
     cout << v1 << " - " << v2 << " = " << v1.difference(v2) << endl;
-    cout << "Colinear: " << v1.is_colinear(v1) << endl;
+    cout << "Colinear: " << v1.is_colinear(v2) << endl;
     cout << "Length: " << v1.length() << endl;
     cout << "Angle: " << v1.angle(v2) * 180 / 3.1415926536 << "°" << endl;
 }
